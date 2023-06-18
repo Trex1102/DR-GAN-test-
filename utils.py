@@ -14,6 +14,7 @@ import os.path
 #import matplotlib.pyplot as plt
 from time import gmtime, strftime
 from config import DATA_DIR
+import imageio
 
 
 pp = pprint.PrettyPrinter()
@@ -192,7 +193,7 @@ def visualize(sess, dcgan, config, option):
     save_images(samples, [8, 8], './samples/test_%s.png' % strftime("%Y-%m-%d %H:%M:%S", gmtime()))
   elif option == 1:
     values = np.arange(0, 1, 1./config.batch_size)
-    for idx in xrange(100):
+    for idx in range(100):
       print(" [*] %d" % idx)
       z_sample = np.zeros([config.batch_size, dcgan.z_dim])
       for kdx, z in enumerate(z_sample):
@@ -202,7 +203,7 @@ def visualize(sess, dcgan, config, option):
       save_images(samples, [8, 8], './samples/test_arange_%s.png' % (idx))
   elif option == 2:
     values = np.arange(0, 1, 1./config.batch_size)
-    for idx in [random.randint(0, 99) for _ in xrange(100)]:
+    for idx in [random.randint(0, 99) for _ in range(100)]:
       print(" [*] %d" % idx)
       z = np.random.uniform(-0.2, 0.2, size=(dcgan.z_dim))
       z_sample = np.tile(z, (config.batch_size, 1))
@@ -214,7 +215,7 @@ def visualize(sess, dcgan, config, option):
       make_gif(samples, './samples/test_gif_%s.gif' % (idx))
   elif option == 3:
     values = np.arange(0, 1, 1./config.batch_size)
-    for idx in xrange(100):
+    for idx in range(100):
       print(" [*] %d" % idx)
       z_sample = np.zeros([config.batch_size, dcgan.z_dim])
       for kdx, z in enumerate(z_sample):
@@ -226,7 +227,7 @@ def visualize(sess, dcgan, config, option):
     image_set = []
     values = np.arange(0, 1, 1./config.batch_size)
 
-    for idx in xrange(100):
+    for idx in range(100):
       print(" [*] %d" % idx)
       z_sample = np.zeros([config.batch_size, dcgan.z_dim])
       for kdx, z in enumerate(z_sample): z[idx] = values[kdx]
@@ -263,18 +264,18 @@ def load_CFP_test(isFlip = False):
 
 
 def load_CFP_recrop_test():
-    print 'Loading CFP ...'
+    print ('Loading CFP ...')
    
     fd = open('data/CFP_recrop/CFP_recrop_images_96_96_test.dat')
     all_images = np.fromfile(file=fd, dtype=np.uint8)
     fd.close()
     all_images = all_images.reshape((-1,96,96,3)).astype(np.float32)
     all_images = all_images/127.5 - 1.
-    print '    DONE. Finish loading CFP recrop  test with ' + str(all_images.shape[0]) + ' images'
+    print ('    DONE. Finish loading CFP recrop  test with ') + str(all_images.shape[0]) + ' images'
     return all_images
 
 def load_CFP_frontal_idx():
-    print 'Loading CFP ...'
+    print ('Loading CFP ...')
    
     fd = open('data/CFP_recrop/CFP_frontal_idx.dat')
     all_idx = np.fromfile(file=fd, dtype=np.uint32)
@@ -293,26 +294,26 @@ def load_IJBA_recrop_test(isFlip = False):
 
     images = images.reshape((-1,96,96,3)).astype(np.float32)
     images = images/127.5 - 1.
-    print '    DONE. Finish loading IJBA recrop with ' + str(images.shape[0]) + ' images'
+    print ('    DONE. Finish loading IJBA recrop with ') + str(images.shape[0]) + ' images'
 
     return images
 
 def load_IJBA_subject_ID():
-    print 'Loading IJBA_subject_ID ...'
+    print ('Loading IJBA_subject_ID ...')
    
     fd = open('data/IJBA_recrop/IJBA_subject_ID.dat')
     all_id = np.fromfile(file=fd, dtype=np.uint32)
     fd.close()
-    print '    DONE. Finish loading IJBA' + str(all_id.shape[0]) + ' ids'
+    print ('    DONE. Finish loading IJBA') + str(all_id.shape[0]) + ' ids'
     return all_id
 
 def load_IJBA_training_idx():
-    print 'Loading IJBA_training_idx.dat ...'
+    print ('Loading IJBA_training_idx.dat ...')
    
     fd = open('data/IJBA_recrop/IJBA_training_idx.dat')
     all_idx = np.fromfile(file=fd, dtype=np.uint32)
     fd.close()
-    print '    DONE. Finish loading IJBA' + str(all_idx.shape[0]) + ' indexes'
+    print ('    DONE. Finish loading IJBA') + str(all_idx.shape[0]) + ' indexes'
     return [idx - 1 for idx in all_idx]
 
 
@@ -347,7 +348,7 @@ def load_AFLW_by_list(txtfile = '/media/tranluan/SSD_Crucial/AFLW/AFLW_recrop_fi
             yaw.append(float(row[3]))
     fileList.close()
 
-    print 'Closed!'
+    print ('Closed!')
     return filename, roll, pitch, yaw
 
 def load_database_by_list(longtail_txt, normal_txt, initial_path = '', initial_id_l = 0, initial_id_n = 0):
